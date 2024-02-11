@@ -28,8 +28,18 @@ $ docker stats
 Then run the service in a separate terminal window:
 
 ```bash
-$ docker build --progress=plain --no-cache -t service:latest -f ./cmd/service/Dockerfile .
-$ docker run -d --name service --rm --cpus="0.5" --memory="500m" --memory-swap="500m" -p 8080:8080 service:latest
+$ docker build \
+    --progress=plain \
+    --no-cache \
+    -t service:latest \
+    -f ./cmd/service/Dockerfile .
+$ docker run -d --rm \
+    --name service \
+    --cpus="0.5" \
+    --memory="500m" \
+    --memory-swap="500m" \
+    -p 8080:8080 \
+    service:latest
 ```
 
 The service will use 500MB of memory and 50% of the one CPU core.
