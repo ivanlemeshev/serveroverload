@@ -32,6 +32,9 @@ func main() {
 	tbrl := ratelimiter.NewTokenBucket(100, 100)
 	http.HandleFunc("/token_bucket", middleware.RateLimiting(tbrl, handler))
 
+	swlrl := ratelimiter.NewSlidingWindowLog(100, 1*time.Second)
+	http.HandleFunc("/sliding_window_log", middleware.RateLimiting(swlrl, handler))
+
 	od := overloaddetector.New(ctx, 20*time.Millisecond, 21*time.Millisecond)
 	http.HandleFunc("/overload_detector", middleware.OverloadDetecting(od, handler))
 
