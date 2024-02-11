@@ -5,8 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ivanlemeshev/serveroverload/internal/ratelimiter"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/ivanlemeshev/serveroverload/internal/ratelimiter"
 )
 
 func TestFixedWindowCounter(t *testing.T) {
@@ -26,8 +27,6 @@ func TestFixedWindowCounter(t *testing.T) {
 		time.Sleep(10 * time.Millisecond)
 	}
 
-	// The number of allowed and dropped requests should be close to each other
-	// because the rate limiter allows 2 requests per 40ms window.
 	// time.Sleep() does not guarantee the number of requests allowed or dropped.
 	fmt.Println("allowed:", allowed, "|", "dropped:", dropped)
 	assert.GreaterOrEqual(t, allowed, 49) // 49 or 51 requests should be allowed

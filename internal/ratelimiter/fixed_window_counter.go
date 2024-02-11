@@ -32,21 +32,15 @@ func (rl *FixedWindowCounter) IsAllowed() bool {
 	rl.mu.Lock()
 	defer rl.mu.Unlock()
 
-	// If the current time is greater than the start of the next window, reset
-	// the request count and start time.
 	if time.Since(rl.windowStartTime) > rl.windowSize {
 		rl.requestCount = 0
 		rl.windowStartTime = time.Now()
 	}
 
-	// If the number of requests in the window is less than the limit, increment
-	// the request count and return true.
 	if rl.requestCount < rl.limit {
 		rl.requestCount++
 		return true
 	}
 
-	// If the number of requests in the window is equal or greater than the
-	// limit, return false.
 	return false
 }

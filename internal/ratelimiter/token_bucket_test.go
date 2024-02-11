@@ -27,7 +27,6 @@ func TestTokenBucket(t *testing.T) {
 		time.Sleep(40 * time.Millisecond)
 	}
 
-	// The number of allowed and dropped requests should be close to each other.
 	// time.Sleep() does not guarantee the number of requests allowed or dropped.
 	fmt.Println("allowed:", allowed, "|", "dropped:", dropped)
 	assert.GreaterOrEqual(t, allowed, 49) // 49 or 51 requests should be allowed
