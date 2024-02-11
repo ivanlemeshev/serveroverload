@@ -5,11 +5,14 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/ivanlemeshev/serveroverload/internal/middleware"
+	"github.com/ivanlemeshev/serveroverload/internal/ratelimiter"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	// Simulate request processing time
-	time.Sleep(100 * time.Millisecond)
+	time.Sleep(20 * time.Millisecond)
 	// Response with status code 200
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, http.StatusText(http.StatusOK))
@@ -17,5 +20,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", handler)
+
+	fwcrl := ratelimiter.NewFixedWindowCounter(100, 1*time.Second)
+	http.HandleFunc("/fixed_window_counter", middleware.RateLimiting(fwcrl, handler))
+
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

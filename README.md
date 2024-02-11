@@ -44,21 +44,26 @@ $ docker run -d --rm \
     service:latest
 ```
 
-The service will use 500MB of memory and 50% of the one CPU core.
+The service will use 200MB of memory and 20% of the one CPU core.
 
 You will see the statistics of the service in the first terminal window and can 
 monitor its resources during the benchmarks.
 
 ```bash
 CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT   MEM %     NET I/O     BLOCK I/O   PIDS
-4a88d2d73e33   service   0.00%     2.652MiB / 500MiB   0.53%     486B / 0B   0B / 0B     5
+6a1a9e288a0c   service   0.00%     2.977MiB / 200MiB   1.49%     486B / 0B   0B / 0B     5
 ```
 
 Run the benchmarks:
 
 ```bash
-$ bombardier -n 1000 -l -r 1000 http://127.0.0.1:8080/
-$ bombardier -n 10000 -l -r 10000 http://127.0.0.1:8080/
+$ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/
+$ bombardier -c 4000 -l -d 10s -r 4000 http://127.0.0.1:8080/
+```
+
+```bash
+$ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/fixed_window_counter
+$ bombardier -c 4000 -l -d 10s -r 4000 http://127.0.0.1:8080/fixed_window_counter
 ```
 
 Stop the service:
