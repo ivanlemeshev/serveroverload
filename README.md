@@ -1,3 +1,5 @@
+![CI](https://github.com/ivanlemeshev/serveroverload/actions/workflows/ci.yml/badge.svg)
+
 # Server overload, rate limiting, load shedding examples
 
 This repository contains examples of server overload scenarios and how to handle 
