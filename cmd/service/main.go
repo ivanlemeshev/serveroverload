@@ -1,12 +1,14 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/ivanlemeshev/serveroverload/internal/middleware"
+	"github.com/ivanlemeshev/serveroverload/internal/overloaddetector"
 	"github.com/ivanlemeshev/serveroverload/internal/ratelimiter"
 )
 
@@ -19,6 +21,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
 	http.HandleFunc("/", handler)
 
 	fwcrl := ratelimiter.NewFixedWindowCounter(100, 1*time.Second)
@@ -26,6 +31,9 @@ func main() {
 
 	tbrl := ratelimiter.NewTokenBucket(100, 100)
 	http.HandleFunc("/token_bucket", middleware.RateLimiting(tbrl, handler))
+
+	od := overloaddetector.New(ctx, 20*time.Millisecond, 21*time.Millisecond)
+	http.HandleFunc("/overload_detector", middleware.OverloadDetecting(od, handler))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
