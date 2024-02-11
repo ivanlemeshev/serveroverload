@@ -32,6 +32,9 @@ func main() {
 	tbrl := ratelimiter.NewTokenBucket(100, 100)
 	http.HandleFunc("/token_bucket", middleware.RateLimiting(tbrl, handler))
 
+	lbrl := ratelimiter.NewLeakyBucket(100, 100*time.Millisecond, 10)
+	http.HandleFunc("/leaky_bucket", middleware.RateLimiting(lbrl, handler))
+
 	swlrl := ratelimiter.NewSlidingWindowLog(100, 1*time.Second)
 	http.HandleFunc("/sliding_window_log", middleware.RateLimiting(swlrl, handler))
 
