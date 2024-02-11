@@ -66,6 +66,11 @@ $ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/fixed_window_counter
 $ bombardier -c 4000 -l -d 10s -r 4000 http://127.0.0.1:8080/fixed_window_counter
 ```
 
+```bash
+$ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/token_bucket
+$ bombardier -c 4000 -l -d 10s -r 4000 http://127.0.0.1:8080/token_bucket
+```
+
 Stop the service:
 
 ```bash

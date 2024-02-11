@@ -24,5 +24,8 @@ func main() {
 	fwcrl := ratelimiter.NewFixedWindowCounter(100, 1*time.Second)
 	http.HandleFunc("/fixed_window_counter", middleware.RateLimiting(fwcrl, handler))
 
+	tbrl := ratelimiter.NewTokenBucket(100, 100)
+	http.HandleFunc("/token_bucket", middleware.RateLimiting(tbrl, handler))
+
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

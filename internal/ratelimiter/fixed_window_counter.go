@@ -29,9 +29,6 @@ func NewFixedWindowCounter(limit int, windowSize time.Duration) *FixedWindowCoun
 // IsAllowed returns true if the rate limiter allows the request, and false if
 // it does not.
 func (rl *FixedWindowCounter) IsAllowed() bool {
-	// Lock the rate limiter while we update its state.
-	// This is necessary because the requestCount and windowStartTime fields are
-	// shared between multiple goroutines.
 	rl.mu.Lock()
 	defer rl.mu.Unlock()
 
