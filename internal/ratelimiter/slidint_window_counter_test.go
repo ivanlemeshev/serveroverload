@@ -10,8 +10,8 @@ import (
 	"github.com/ivanlemeshev/serveroverload/internal/ratelimiter"
 )
 
-func TestFixedWindowCounter(t *testing.T) {
-	rl := ratelimiter.NewFixedWindowCounter(2, 40*time.Millisecond)
+func TestSlidingWindowCounter(t *testing.T) {
+	rl := ratelimiter.NewSlidingWindowCounter(2, 40*time.Millisecond)
 
 	allowed := 0
 	dropped := 0
@@ -29,6 +29,6 @@ func TestFixedWindowCounter(t *testing.T) {
 
 	// time.Sleep() does not guarantee the number of requests allowed or dropped.
 	fmt.Println("allowed:", allowed, "|", "dropped:", dropped)
-	assert.GreaterOrEqual(t, allowed, 49)
-	assert.GreaterOrEqual(t, dropped, 49)
+	assert.GreaterOrEqual(t, allowed, 50)
+	assert.GreaterOrEqual(t, dropped, 50)
 }

@@ -35,6 +35,9 @@ func main() {
 	swlrl := ratelimiter.NewSlidingWindowLog(100, 1*time.Second)
 	http.HandleFunc("/sliding_window_log", middleware.RateLimiting(swlrl, handler))
 
+	swcrl := ratelimiter.NewSlidingWindowCounter(100, 1*time.Second)
+	http.HandleFunc("/sliding_window_counter", middleware.RateLimiting(swcrl, handler))
+
 	od := overloaddetector.New(ctx, 20*time.Millisecond, 21*time.Millisecond)
 	http.HandleFunc("/overload_detector", middleware.OverloadDetecting(od, handler))
 
