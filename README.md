@@ -37,9 +37,9 @@ $ docker build \
     -f ./cmd/service/Dockerfile .
 $ docker run -d --rm \
     --name service \
-    --cpus="0.5" \
-    --memory="500m" \
-    --memory-swap="500m" \
+    --cpus="0.2" \
+    --memory="200m" \
+    --memory-swap="200m" \
     -p 8080:8080 \
     service:latest
 ```
