@@ -22,7 +22,6 @@ jobs:
         with:
           push: false
           tags: service:latest
-          context: cmd/service
           file: cmd/service/Dockerfile
 
   golang:
