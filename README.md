@@ -49,7 +49,7 @@ monitor its resources during the benchmarks.
 
 ```bash
 CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT   MEM %     NET I/O     BLOCK I/O   PIDS
-cde22c42e90e   service   0.00%     2.66MiB / 10MiB     26.60%    736B / 0B   0B / 0B     5
+4a88d2d73e33   service   0.00%     2.652MiB / 500MiB   0.53%     486B / 0B   0B / 0B     5
 ```
 
 Run the benchmarks:
@@ -57,16 +57,6 @@ Run the benchmarks:
 ```bash
 $ bombardier -n 1000 -l -r 1000 http://127.0.0.1:8080/
 $ bombardier -n 10000 -l -r 10000 http://127.0.0.1:8080/
-$ bombardier -n 1000 -l -r 1000 http://127.0.0.1:8080/fixed_window_counter
-$ bombardier -n 10000 -l -r 10000 http://127.0.0.1:8080/fixed_window_counter
-$ bombardier -n 1000 -l -r 1000 http://127.0.0.1:8080/sliding_window_log
-$ bombardier -n 10000 -l -r 10000 http://127.0.0.1:8080/sliding_window_log
-$ bombardier -n 1000 -l -r 1000 http://127.0.0.1:8080/token_bucket
-$ bombardier -n 10000 -l -r 10000 http://127.0.0.1:8080/token_bucket
-$ bombardier -n 1000 -l -r 1000 http://127.0.0.1:8080/leaky_bucket
-$ bombardier -n 10000 -l -r 10000 http://127.0.0.1:8080/leaky_bucket
-$ bombardier -n 1000 -l -r 1000 http://127.0.0.1:8080/overload_detecting
-$ bombardier -n 10000 -l -r 10000 http://127.0.0.1:8080/overload_detecting
 ```
 
 Stop the service:

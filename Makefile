@@ -2,10 +2,13 @@
 tests:
 	go test -race -v -count=1 ./...
 
-.PHONY: run-service
-run-service:
-# https://docs.docker.com/config/containers/resource_constraints/
+.PHONY: build-service
+build-service:
 	docker build --progress=plain --no-cache -t service:latest -f ./cmd/service/Dockerfile .
+
+.PHONY: run-service
+run-service: build-service
+# https://docs.docker.com/config/containers/resource_constraints/
 	docker run -d --rm --name service --cpus="0.5" --memory="500m" --memory-swap="500m" -p 8080:8080 service:latest
 
 .PHONY: clean-service
