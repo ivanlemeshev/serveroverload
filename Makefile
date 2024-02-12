@@ -11,6 +11,6 @@ run-service: build-service
 # https://docs.docker.com/config/containers/resource_constraints/
 	docker run -d --rm --name service --cpus="0.2" --memory="200m" --memory-swap="200m" -p 8080:8080 service:latest
 
-.PHONY: clean-service
-clean-service:
+.PHONY: stop-service
+stop-service:
 	docker stop service
