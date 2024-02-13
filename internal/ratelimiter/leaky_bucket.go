@@ -7,8 +7,8 @@ import (
 // LeakyBucket is a rate limiter that uses the leaky bucket algorithm.
 type LeakyBucket struct {
 	bucket      chan struct{} // channel that acts as a queue for the leaky bucket
-	outflowRate int           // number of tokens to remove from the bucket per interval
-	interval    time.Duration // interval at which to remove tokens from the bucket
+	outflowRate int           // number of requests to remove from the bucket per interval
+	interval    time.Duration // interval at which to remove requests from the bucket
 	lastLeak    time.Time     // last time the bucket was leaked
 }
 
@@ -38,10 +38,9 @@ func (rl *LeakyBucket) IsAllowed() bool {
 	}
 }
 
-// leak removes tokens from the bucket.
+// leak removes requests from the bucket at the outflow rate.
 func (rl *LeakyBucket) leak() {
 	if time.Since(rl.lastLeak) >= rl.interval {
-		// Remove tokens from the bucket at the outflow rate.
 		for range rl.outflowRate {
 			select {
 			case <-rl.bucket:
