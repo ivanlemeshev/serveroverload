@@ -57,38 +57,38 @@ CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT   MEM %     NET I/O     BLO
 Run the benchmarks:
 
 ```bash
-$ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/
-$ bombardier -c 4000 -l -d 10s -r 4000 http://127.0.0.1:8080/
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/
 ```
 
 ```bash
-$ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/fixed_window_counter
-$ bombardier -c 4000 -l -d 10s -r 4000 http://127.0.0.1:8080/fixed_window_counter
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/fixed_window_counter
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/fixed_window_counter
 ```
 
 ```bash
-$ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/token_bucket
-$ bombardier -c 4000 -l -d 10s -r 4000 http://127.0.0.1:8080/token_bucket
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/token_bucket
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/token_bucket
 ```
 
 ```bash
-$ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/leaky_bucket
-$ bombardier -c 4000 -l -d 10s -r 4000 http://127.0.0.1:8080/leaky_bucket
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/leaky_bucket
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/leaky_bucket
 ```
 
 ```bash
-$ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/sliding_window_log
-$ bombardier -c 4000 -l -d 10s -r 4000 http://127.0.0.1:8080/sliding_window_log
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/sliding_window_log
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/sliding_window_log
 ```
 
 ```bash
-$ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/sliding_window_counter
-$ bombardier -c 4000 -l -d 10s -r 4000 http://127.0.0.1:8080/sliding_window_counter
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/sliding_window_counter
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/sliding_window_counter
 ```
 
 ```bash
 $ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/overload_detector
-$ bombardier -c 4000 -l -d 10s -r 4000 http://127.0.0.1:8080/overload_detector
+$ bombardier -c 5000 -l -d 10s -r 5000 http://127.0.0.1:8080/overload_detector
 ```
 
 Stop the service:
