@@ -9,7 +9,7 @@ build-service:
 .PHONY: run-service
 run-service: build-service
 # https://docs.docker.com/config/containers/resource_constraints/
-	docker run -d --rm --name service --cpus="0.2" --memory="200m" --memory-swap="200m" -p 8080:8080 service:latest
+	docker run -d --rm --name service --cpus="0.2" --memory="200m" --memory-swap="200m" -p 8000:8000 service:latest
 
 .PHONY: stop-service
 stop-service:

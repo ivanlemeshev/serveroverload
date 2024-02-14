@@ -26,23 +26,23 @@ func main() {
 
 	http.HandleFunc("/", handler)
 
-	fwcrl := ratelimiter.NewFixedWindowCounter(50, 1*time.Second)
+	fwcrl := ratelimiter.NewFixedWindowCounter(30, 1*time.Second)
 	http.HandleFunc("/fixed_window_counter", middleware.RateLimiting(fwcrl, handler))
 
-	tbrl := ratelimiter.NewTokenBucket(50, 50)
+	tbrl := ratelimiter.NewTokenBucket(30, 30)
 	http.HandleFunc("/token_bucket", middleware.RateLimiting(tbrl, handler))
 
-	lbrl := ratelimiter.NewLeakyBucket(50, 100*time.Millisecond, 5)
+	lbrl := ratelimiter.NewLeakyBucket(30, 100*time.Millisecond, 5)
 	http.HandleFunc("/leaky_bucket", middleware.RateLimiting(lbrl, handler))
 
-	swlrl := ratelimiter.NewSlidingWindowLog(50, 1*time.Second)
+	swlrl := ratelimiter.NewSlidingWindowLog(30, 1*time.Second)
 	http.HandleFunc("/sliding_window_log", middleware.RateLimiting(swlrl, handler))
 
-	swcrl := ratelimiter.NewSlidingWindowCounter(50, 1*time.Second)
+	swcrl := ratelimiter.NewSlidingWindowCounter(30, 1*time.Second)
 	http.HandleFunc("/sliding_window_counter", middleware.RateLimiting(swcrl, handler))
 
 	od := overloaddetector.New(ctx, 20*time.Millisecond, 21*time.Millisecond)
 	http.HandleFunc("/overload_detector", middleware.OverloadDetecting(od, handler))
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8000", nil))
 }

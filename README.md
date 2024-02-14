@@ -30,18 +30,8 @@ $ docker stats
 Then run the service in a separate terminal window:
 
 ```bash
-$ docker build \
-    --progress=plain \
-    --no-cache \
-    -t service:latest \
-    -f ./cmd/service/Dockerfile .
-$ docker run -d --rm \
-    --name service \
-    --cpus="0.2" \
-    --memory="200m" \
-    --memory-swap="200m" \
-    -p 8080:8080 \
-    service:latest
+$ docker build --progress=plain --no-cache -t service:latest -f ./cmd/service/Dockerfile .
+$ docker run -d --rm --name service --cpus="0.2" --memory="200m" --memory-swap="200m" -p 8000:8000 service:latest
 ```
 
 The service will use 200MB of memory and 20% of the one CPU core.
@@ -57,38 +47,38 @@ CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT   MEM %     NET I/O     BLO
 Run the benchmarks:
 
 ```bash
-$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/
-$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8000/
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8000/
 ```
 
 ```bash
-$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/fixed_window_counter
-$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/fixed_window_counter
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8000/fixed_window_counter
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8000/fixed_window_counter
 ```
 
 ```bash
-$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/token_bucket
-$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/token_bucket
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8000/token_bucket
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8000/token_bucket
 ```
 
 ```bash
-$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/leaky_bucket
-$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/leaky_bucket
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8000/leaky_bucket
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8000/leaky_bucket
 ```
 
 ```bash
-$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/sliding_window_log
-$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/sliding_window_log
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8000/sliding_window_log
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8000/sliding_window_log
 ```
 
 ```bash
-$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8080/sliding_window_counter
-$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8080/sliding_window_counter
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8000/sliding_window_counter
+$ bombardier -c 3000 -l -d 10s -r 3000 http://127.0.0.1:8000/sliding_window_counter
 ```
 
 ```bash
-$ bombardier -c 50 -l -d 10s -r 50 http://127.0.0.1:8080/overload_detector
-$ bombardier -c 5000 -l -d 10s -r 5000 http://127.0.0.1:8080/overload_detector
+$ bombardier -c 30 -l -d 10s -r 30 http://127.0.0.1:8000/overload_detector
+$ bombardier -c 5000 -l -d 10s -r 5000 http://127.0.0.1:8000/overload_detector
 ```
 
 Stop the service:

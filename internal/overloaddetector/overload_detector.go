@@ -29,19 +29,23 @@ func New(ctx context.Context, checkInterval, overloadFactor time.Duration) *Over
 	return &od
 }
 
+func (od *OverloadDetector) IsOverloaded() bool {
+	return od.isOverloaded.Load()
+}
+
 func (od *OverloadDetector) run(ctx context.Context) {
 	ticker := time.NewTicker(od.checkInterval)
 	defer ticker.Stop()
 
-	// Start time to measure the elapsed time.
-	startTime := time.Now()
+	// Check time to measure the elapsed time.
+	checkTime := time.Now()
 	for {
 		select {
 		case <-ctx.Done():
 			return
 		case <-ticker.C:
 			// Check how long it took to process the last batch of requests.
-			elapsed := time.Since(startTime)
+			elapsed := time.Since(checkTime)
 			log.Println("elapsed: ", elapsed, " overloadFactor: ", od.overloadFactor)
 			if elapsed > od.overloadFactor {
 				// If it took longer than the overload factor, we're overloaded.
@@ -50,12 +54,8 @@ func (od *OverloadDetector) run(ctx context.Context) {
 				// Otherwise, we're not overloaded.
 				od.isOverloaded.Store(false)
 			}
-			// Reset the start time.
-			startTime = time.Now()
+			// Reset the check time.
+			checkTime = time.Now()
 		}
 	}
-}
-
-func (od *OverloadDetector) IsOverloaded() bool {
-	return od.isOverloaded.Load()
 }
