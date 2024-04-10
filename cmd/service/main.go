@@ -1,16 +1,23 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
+	"github.com/ivanlemeshev/serveroverload/internal/middleware"
+	"github.com/ivanlemeshev/serveroverload/internal/overloaddetector"
 	"github.com/ivanlemeshev/serveroverload/internal/password"
 )
 
 func main() {
-	http.HandleFunc("GET /password/{length}", handler)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	od := overloaddetector.New(ctx, 10*time.Microsecond, 11*time.Millisecond)
+	http.HandleFunc("GET /password/{length}", middleware.OverloadDetecting(od, handler))
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
 
