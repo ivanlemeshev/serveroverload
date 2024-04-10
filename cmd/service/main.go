@@ -6,11 +6,14 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/ivanlemeshev/serveroverload/internal/middleware"
 	"github.com/ivanlemeshev/serveroverload/internal/password"
+	"github.com/ivanlemeshev/serveroverload/internal/ratelimiter"
 )
 
 func main() {
-	http.HandleFunc("GET /password/{length}", handler)
+	rl := ratelimiter.NewTokenBucket(1, 1)
+	http.HandleFunc("GET /password/{length}", middleware.RateLimiting(rl, handler))
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
 
