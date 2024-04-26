@@ -1,7 +1,3 @@
-.PHONY: tests
-tests:
-	go test -race -v -count=1 ./...
-
 .PHONY: build-service
 build-service:
 	docker build --progress=plain --no-cache -t service:latest -f ./cmd/service/Dockerfile .
